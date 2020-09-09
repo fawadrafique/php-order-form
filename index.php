@@ -4,47 +4,52 @@ declare(strict_types=1);
 
 //we are going to use session variables so we need to enable sessions
 session_start();
+$email = $street = $streetnumber = $city = $zipcode = '';
+$empty = ['email' => '', 'street' => ',', 'streetnumber' => '', 'city' => '', 'zipcode' => ''];
+$error = ['email' => '', 'street' => ',', 'streetnumber' => '', 'city' => '', 'zipcode' => ''];
+
 if (isset($_POST['order'])) {
     if (empty($_POST['email'])) {
-        echo "Please enter your email address" . "<br />";
+        $empty['email'] = "Please enter your email address";
     } else {
         $email = $_POST['email'];
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             echo "$email is a valid email address" . "<br />";
         } else {
-            echo "$email is not a valid email address" . "<br />";
+
+            $error['email'] = "$email is not a valid email address" . "";
         }
     }
     if (empty($_POST['street'])) {
-        echo "Street is required" . "<br />";
+        $empty['street'] =  "Street name is required";
     } else {
         $street = $_POST['street'];
         echo "$street" . "<br />";
     }
     if (empty($_POST['streetnumber'])) {
-        echo "Street number is required" . "<br />";
+        $empty['streetnumber'] =  "Street number is required";
     } else {
         $streetnumber = $_POST['streetnumber'];
         if (is_numeric($streetnumber)) {
             echo "$streetnumber is a valid Street number" . "<br />";
         } else {
-            echo "$streetnumber is not a valid Street number" . "<br />";
+            $error['streetnumber'] =  "$streetnumber is not a valid Street number";
         }
     }
     if (empty($_POST['city'])) {
-        echo "City is required" . "<br />";
+        $empty['city'] =  "City is required";
     } else {
         $city = $_POST['city'];
         echo "$city" . "<br />";
     }
     if (empty($_POST['zipcode'])) {
-        echo "Zipcode is required" . "<br />";
+        $empty['zipcode'] =  "Zipcode is required";
     } else {
         $zipcode = $_POST['zipcode'];
         if (is_numeric($zipcode)) {
             echo "$zipcode is a valid Zipcode" . "<br />";
         } else {
-            echo "$zipcode is not a valid Zipcode" . "<br />";
+            $error['email'] =  "$zipcode is not a valid Zipcode";
         }
     }
 }
