@@ -26,10 +26,14 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="email">E-mail:</label>
-                    <input type="text" id="email" name="email" class="form-control" />
+                    <input type="text" id="email" name="email" value="<?= $email; ?>" class="form-control" />
+                    <? php if($empty['email']): ?>
+                    <div class="text-warning"><?= $empty['email']; ?></div>
+                    <? php ifelseend ?>
                 </div>
-                <div></div>
+
             </div>
+
 
             <fieldset>
                 <legend>Address</legend>
@@ -37,21 +41,33 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="street">Street:</label>
-                        <input type="text" name="street" id="street" class="form-control">
+                        <input type="text" name="street" id="street" value="<?= $street; ?>" class="form-control">
+                        <? php if($empty['street']): ?>
+                        <div class="text-warning"><?= $empty['street']; ?></div>
+                        <? php ifelseend ?>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="streetnumber">Street number:</label>
-                        <input type="text" id="streetnumber" name="streetnumber" class="form-control">
+                        <input type="text" id="streetnumber" name="streetnumber" value="<?= $streetnumber; ?>" class="form-control">
+                        <? php if($empty['streetnumber']): ?>
+                        <div class="text-warning"><?= $empty['streetnumber']; ?></div>
+                        <? php ifelseend ?>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="city">City:</label>
-                        <input type="text" id="city" name="city" class="form-control">
+                        <input type="text" id="city" name="city" value="<?= $city; ?>" class="form-control">
+                        <? php if($empty['city']): ?>
+                        <div class="text-warning"><?= $empty['city']; ?></div>
+                        <? php ifelseend ?>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="zipcode">Zipcode</label>
-                        <input type="text" id="zipcode" name="zipcode" class="form-control">
+                        <input type="text" id="zipcode" name="zipcode" value="<?= $zipcode; ?>" class="form-control">
+                        <? php if($empty['zipcode']): ?>
+                        <div class="text-warning"><?= $empty['zipcode']; ?></div>
+                        <? php ifelseend ?>
                     </div>
                 </div>
             </fieldset>
