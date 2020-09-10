@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 //we are going to use session variables so we need to enable sessions
 session_start();
+$_SESSION['check'] = true;
+$totalValue = 0;
 $email = $street = $streetnumber = $city = $zipcode = $success = '';
-$empty = ['email' => '', 'street' => '', 'streetnumber' => '', 'city' => '', 'zipcode' => ''];
-$error = ['email' => '', 'street' => '', 'streetnumber' => '', 'city' => '', 'zipcode' => ''];
+$empty = ['email' => '', 'street' => '', 'streetnumber' => '', 'city' => '', 'zipcode' => '', 'product' => '', 'delivery' => ''];
+$errors = ['email' => '', 'street' => '', 'streetnumber' => '', 'city' => '', 'zipcode' => ''];
 
 if (isset($_POST['order'])) {
+
     if (empty($_POST['email'])) {
         $empty['email'] = "Please enter your email address";
     } else {
@@ -17,7 +20,7 @@ if (isset($_POST['order'])) {
             // TODO: email is valid
         } else {
 
-            $error['email'] = "$email is not a valid email address" . "";
+            $errors['email'] = "$email is not a valid email address" . "";
         }
     }
     if (empty($_POST['street'])) {
@@ -33,7 +36,7 @@ if (isset($_POST['order'])) {
         if (is_numeric($streetnumber)) {
             // TODO: streetnumber is valid
         } else {
-            $error['streetnumber'] =  "$streetnumber is not a valid Street number";
+            $errors['streetnumber'] =  "$streetnumber is not a valid Street number";
         }
     }
     if (empty($_POST['city'])) {
@@ -49,17 +52,33 @@ if (isset($_POST['order'])) {
         if (is_numeric($zipcode)) {
             // TODO: zipcode is valid
         } else {
-            $error['email'] =  "$zipcode is not a valid Zipcode";
+            $errors['email'] =  "$zipcode is not a valid Zipcode";
         }
     }
-    if (array_filter($error)) {
-        echo 'Please fix the errors' . "<br />";
-        var_dump(array_filter($error));
+    if (empty($_POST['products'])) {
+        $empty['product'] =  "At least one product is required";
     } else {
-        $success = 'Thank you! Your order was successfully submitted!';
+        $cart = $_POST['products'];
+        foreach ($cart as $value) {
+            $totalValue += $value;
+        }
+
+        print_r($cart);
+    }
+    if (empty($_POST['delivery'])) {
+        $empty['delivery'] =  "Please select a delivery option";
+    } else {
+        $delivery = $_POST['delivery'];
+    }
+
+    if (array_filter($errors) || array_filter($empty)) {
+        // TODO: echo 'Please fix the errors' . "<br />";
+    } else {
+        $estimatedTime = date('h:i A', time() + $delivery);
+        $success = "Thank you! Your order was successfully submitted!" . "<br>" . "Delivery expected at " . "$estimatedTime";
     }
 }
-//whatIsHappening();
+whatIsHappening();
 function whatIsHappening()
 {
     echo '<h2>$_GET</h2>';
@@ -71,23 +90,27 @@ function whatIsHappening()
     echo '<h2>$_SESSION</h2>';
     var_dump($_SESSION);
 }
-
+$deliveries = [
+    ['name' => 'Normal delivery - 2 hours', 'time' => (2 * 60 * 60)],
+    ['name' => 'Express delivery - 45 minutes', 'time' => (45 * 60)]
+];
 //your products with their price.
-$products = [
-    ['name' => 'Club Ham', 'price' => 3.20],
-    ['name' => 'Club Cheese', 'price' => 3],
-    ['name' => 'Club Cheese & Ham', 'price' => 4],
-    ['name' => 'Club Chicken', 'price' => 4],
-    ['name' => 'Club Salmon', 'price' => 5]
-];
+if (!$_GET || $_GET['food']) {
+    $products = [
+        ['name' => 'Club Ham', 'price' => 3.20],
+        ['name' => 'Club Cheese', 'price' => 3],
+        ['name' => 'Club Cheese & Ham', 'price' => 4],
+        ['name' => 'Club Chicken', 'price' => 4],
+        ['name' => 'Club Salmon', 'price' => 5]
+    ];
+} elseif (!$_GET['food']) {
+    $products = [
+        ['name' => 'Cola', 'price' => 2],
+        ['name' => 'Fanta', 'price' => 2],
+        ['name' => 'Sprite', 'price' => 2],
+        ['name' => 'Ice-tea', 'price' => 3],
+    ];
+}
 
-$products = [
-    ['name' => 'Cola', 'price' => 2],
-    ['name' => 'Fanta', 'price' => 2],
-    ['name' => 'Sprite', 'price' => 2],
-    ['name' => 'Ice-tea', 'price' => 3],
-];
-
-$totalValue = 0;
 
 require 'form-view.php';
