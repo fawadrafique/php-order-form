@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 //we are going to use session variables so we need to enable sessions
 session_start();
-$_SESSION['check'] = true;
-$totalValue = 0;
 $email = $street = $streetnumber = $city = $zipcode = $success = '';
 $empty = ['email' => '', 'street' => '', 'streetnumber' => '', 'city' => '', 'zipcode' => '', 'product' => '', 'delivery' => ''];
 $errors = ['email' => '', 'street' => '', 'streetnumber' => '', 'city' => '', 'zipcode' => ''];
@@ -16,23 +14,26 @@ if (isset($_POST['order'])) {
         $empty['email'] = "Please enter your email address";
     } else {
         $email = $_POST['email'];
+        $_SESSION['email'] = $email;
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             // TODO: email is valid
         } else {
 
-            $errors['email'] = "$email is not a valid email address" . "";
+            $errors['email'] = "$email is not a valid email address";
         }
     }
     if (empty($_POST['street'])) {
         $empty['street'] =  "Street name is required";
     } else {
         $street = $_POST['street'];
+        $_SESSION['street'] = $street;
         // TODO: street is valid
     }
     if (empty($_POST['streetnumber'])) {
         $empty['streetnumber'] =  "Street number is required";
     } else {
         $streetnumber = $_POST['streetnumber'];
+        $_SESSION['streetnumber'] = $streetnumber;
         if (is_numeric($streetnumber)) {
             // TODO: streetnumber is valid
         } else {
@@ -43,12 +44,14 @@ if (isset($_POST['order'])) {
         $empty['city'] =  "City is required";
     } else {
         $city = $_POST['city'];
+        $_SESSION['city'] = $city;
         // TODO: city is valid
     }
     if (empty($_POST['zipcode'])) {
         $empty['zipcode'] =  "Zipcode is required";
     } else {
         $zipcode = $_POST['zipcode'];
+        $_SESSION['zipcode'] = $zipcode;
         if (is_numeric($zipcode)) {
             // TODO: zipcode is valid
         } else {
@@ -71,12 +74,11 @@ if (isset($_POST['order'])) {
         $delivery = $_POST['delivery'];
     }
 
-    if (array_filter($errors) || array_filter($empty)) {
-        // TODO: echo 'Please fix the errors' . "<br />";
-    } else {
-        $estimatedTime = date('h:i A', time() + $delivery);
-        $success = "Thank you! Your order was successfully submitted!" . "<br>" . "Delivery expected at " . "$estimatedTime";
-    }
+    // if (array_filter($errors) || array_filter($empty)) {
+    //     // TODO: echo 'Please fix the errors' . "<br />";
+    // } else {
+    //     success($delivery);
+    // }
 }
 whatIsHappening();
 function whatIsHappening()
@@ -89,6 +91,13 @@ function whatIsHappening()
     var_dump($_COOKIE);
     echo '<h2>$_SESSION</h2>';
     var_dump($_SESSION);
+}
+function success($delivery, $cost)
+{
+    $estimatedTime = date('h:i A', time() + $delivery);
+    return $success = "Thank you! Your order was successfully submitted!"
+        . "<br>" . "Total price: &euro; " . "$cost"
+        . "<br>" . "Delivery expected at " . "$estimatedTime";
 }
 $deliveries = [
     ['name' => 'Normal delivery - 2 hours', 'time' => (2 * 60 * 60)],
