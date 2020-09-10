@@ -14,7 +14,10 @@
         <h1>Order food in restaurant "the Personal Ham Processors"</h1>
         <?php if (isset($_POST['order'])) : ?>
             <?php if (!array_filter($errors) && !array_filter($empty)) : ?>
-                <div class="alert alert-success text-success text-center" role="alert"><?= $success; ?></div>
+                <?php session_unset(); ?>
+                <?php $value += $totalValue; ?>
+                <?php setcookie('order', $value, time() + (86400 * 30), '/'); ?>
+                <div class="alert alert-success text-success text-center" role="alert"><?= success($delivery, $totalValue); ?></div>
             <?php endif; ?>
         <?php endif; ?>
 
@@ -36,7 +39,7 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="email">E-mail:</label>
-                    <input type="text" id="email" name="email" value="<?= $email; ?>" class="form-control" />
+                    <input type="text" id="email" name="email" value="<?= $_SESSION['email'] ?? ''; ?>" class="form-control" />
                     <?php if ($empty['email']) : ?>
                         <div class="text-danger"><?= $empty['email']; ?></div>
                     <?php elseif ($errors['email']) : ?>
@@ -53,14 +56,14 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="street">Street:</label>
-                        <input type="text" name="street" id="street" value="<?= $street; ?>" class="form-control">
+                        <input type="text" name="street" id="street" value="<?= $_SESSION['street'] ?? ''; ?>" class="form-control">
                         <?php if ($empty['street']) : ?>
                             <div class="text-danger"><?= $empty['street']; ?></div>
                         <?php endif; ?>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="streetnumber">Street number:</label>
-                        <input type="text" id="streetnumber" name="streetnumber" value="<?= $streetnumber; ?>" class="form-control">
+                        <input type="text" id="streetnumber" name="streetnumber" value="<?= $_SESSION['streetnumber'] ?? ''; ?>" class="form-control">
                         <?php if ($empty['streetnumber']) : ?>
                             <div class="text-danger"><?= $empty['streetnumber']; ?></div>
                         <?php elseif ($errors['streetnumber']) : ?>
@@ -71,14 +74,14 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="city">City:</label>
-                        <input type="text" id="city" name="city" value="<?= $city; ?>" class="form-control">
+                        <input type="text" id="city" name="city" value="<?= $_SESSION['city'] ?? ''; ?>" class="form-control">
                         <?php if ($empty['city']) : ?>
                             <div class="text-danger"><?= $empty['city']; ?></div>
                         <?php endif; ?>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="zipcode">Zipcode</label>
-                        <input type="text" id="zipcode" name="zipcode" value="<?= $zipcode; ?>" class="form-control">
+                        <input type="text" id="zipcode" name="zipcode" value="<?= $_SESSION['zipcode'] ?? ''; ?>" class="form-control">
                         <?php if ($empty['zipcode']) : ?>
                             <div class="text-danger"><?= $empty['zipcode']; ?></div>
                         <?php elseif ($errors['zipcode']) : ?>
@@ -120,7 +123,7 @@
 
         </form>
 
-        <footer>You already ordered <strong>&euro; <?php echo $totalValue ?></strong> in food and drinks.</footer>
+        <footer>You already ordered <strong>&euro; <?php echo $_COOKIE['order'] ?? '0' ?></strong> in food and drinks.</footer>
     </div>
 
     <style>
