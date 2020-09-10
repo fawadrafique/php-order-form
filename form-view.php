@@ -15,8 +15,8 @@
         <?php if (isset($_POST['order'])) : ?>
             <?php if (!array_filter($errors) && !array_filter($empty)) : ?>
                 <?php session_unset(); ?>
-                <?php $value += $totalValue; ?>
-                <?php setcookie('order', $value, time() + (86400 * 30), '/'); ?>
+                <?php $_COOKIE['order'] += $totalValue; ?>
+                <?php setcookie('order', $_COOKIE['order'], time() + (86400 * 30), '/'); ?>
                 <div class="alert alert-success text-success text-center" role="alert"><?= success($delivery, $totalValue); ?></div>
             <?php endif; ?>
         <?php endif; ?>
