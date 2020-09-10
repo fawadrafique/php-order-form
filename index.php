@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 //we are going to use session variables so we need to enable sessions
 session_start();
+$totalValue = 0;
 $email = $street = $streetnumber = $city = $zipcode = $success = '';
 $empty = ['email' => '', 'street' => '', 'streetnumber' => '', 'city' => '', 'zipcode' => '', 'product' => '', 'delivery' => ''];
 $errors = ['email' => '', 'street' => '', 'streetnumber' => '', 'city' => '', 'zipcode' => ''];
+define("owner_email", "fawadrafique74@gmail.com");
 
 if (isset($_POST['order'])) {
 
