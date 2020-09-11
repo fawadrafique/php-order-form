@@ -9,7 +9,7 @@
     <title>Des Pardes online</title>
 </head>
 
-<body class="bg-info">
+<body class="bg-secondary">
     <div class="container text-light">
         <h1 class="text-center">Des Pardes</h1>
         <?php if (isset($_POST['order'])) : ?>
@@ -24,12 +24,12 @@
             <?php endif; ?>
         <?php endif; ?>
 
-        <nav class="navbar navbar-expand-sm navbar-dark bg-info d-flex justify-content-center">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-secondary d-flex justify-content-center">
             <ul class="navbar-nav">
-                <li class="nav-item active px-2">
+                <li class="nav-item <?= (!$_GET || $_GET['food']) ? 'active' : ''; ?> px-2">
                     <a class="nav-link" href="?food=1">Food</a>
                 </li>
-                <li class="nav-item px-2">
+                <li class="nav-item <?= (!$_GET || !$_GET['food']) ? 'active' : ''; ?> px-2">
                     <a class="nav-link" href="?food=0">Drinks</a>
                 </li>
             </ul>
@@ -117,6 +117,7 @@
                 <div class="form-group col-md-6">
                     <fieldset>
                         <legend>Delivery</legend>
+                        <div class="text-dark mb-1" style="font-size: 12px;"><?= 'Normal orders are fulfilled in 2 hours, for express delivery it is only 45 minutes.' ?></div>
                         <?php foreach ($deliveries as $i => $delivery) : ?>
                             <label>
                                 <input type="radio" value="<?php echo $delivery['time'] ?>" name="delivery" /> <?php echo $delivery['name'] ?> </label><br />

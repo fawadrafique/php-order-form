@@ -7,7 +7,7 @@ session_start();
 $totalValue = 0;
 $fname = $lname = $email = $street = $streetnumber = $city = $zipcode = $success = '';
 $errors = ['fname' => '', 'lname' => '', 'email' => '', 'street' => '', 'streetnumber' => '', 'city' => '', 'zipcode' => '', 'product' => '', 'delivery' => ''];
-define("owner_email", "becodephp@gmail.com");
+define("dp_email", "becodephp@gmail.com");
 
 if (isset($_POST['order'])) {
 
@@ -43,7 +43,7 @@ if (isset($_POST['order'])) {
             // TODO: email is valid
         } else {
 
-            $errors['email'] = "$email is not a valid email address";
+            $errors['email'] = "\"$email\" is not a valid email address";
         }
     }
     if (empty($_POST['street'])) {
@@ -61,7 +61,7 @@ if (isset($_POST['order'])) {
         if (is_numeric($streetnumber)) {
             // TODO: streetnumber is valid
         } else {
-            $errors['streetnumber'] =  "$streetnumber is not a valid Street number";
+            $errors['streetnumber'] =  "\"$streetnumber\" is not a valid Street number";
         }
     }
     if (empty($_POST['city'])) {
@@ -79,7 +79,7 @@ if (isset($_POST['order'])) {
         if (is_numeric($zipcode)) {
             // TODO: zipcode is valid
         } else {
-            $errors['email'] =  "$zipcode is not a valid Zipcode";
+            $errors['email'] =  "\"$zipcode\" is not a valid Zipcode";
         }
     }
     if (empty($_POST['products'])) {
@@ -97,12 +97,6 @@ if (isset($_POST['order'])) {
     } else {
         $delivery = $_POST['delivery'];
     }
-
-    // if (array_filter($errors) || array_filter($errors)) {
-    //     // TODO: echo 'Please fix the errors' . "<br />";
-    // } else {
-    //     success($delivery);
-    // }
 }
 //whatIsHappening();
 function whatIsHappening()
@@ -128,27 +122,8 @@ function sanitizer($sanitize)
     $clean_comment = strip_tags($sanitize);
     return htmlspecialchars($clean_comment);
 }
-$deliveries = [
-    ['name' => 'Normal delivery - 2 hours', 'time' => (2 * 60 * 60)],
-    ['name' => 'Express delivery - 45 minutes', 'time' => (45 * 60)]
-];
-//your products with their price.
-if (!$_GET || $_GET['food']) {
-    $products = [
-        ['name' => 'Club Ham', 'price' => 3.20],
-        ['name' => 'Club Cheese', 'price' => 3],
-        ['name' => 'Club Cheese & Ham', 'price' => 4],
-        ['name' => 'Club Chicken', 'price' => 4],
-        ['name' => 'Club Salmon', 'price' => 5]
-    ];
-} elseif (!$_GET['food']) {
-    $products = [
-        ['name' => 'Cola', 'price' => 2],
-        ['name' => 'Fanta', 'price' => 2],
-        ['name' => 'Sprite', 'price' => 2],
-        ['name' => 'Ice-tea', 'price' => 3],
-    ];
-}
 
+
+require 'food.php';
 
 require 'form-view.php';
