@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-    <title>Order food & drinks</title>
+    <title>Des Pardes online</title>
 </head>
 
-<body>
-    <div class="container">
-        <h1>Des Pardes</h1>
+<body class="bg-info">
+    <div class="container text-light">
+        <h1 class="text-center">Des Pardes</h1>
         <?php if (isset($_POST['order'])) : ?>
             <?php if (!array_filter($errors) && !array_filter($empty)) : ?>
                 <?php session_unset(); ?>
@@ -24,21 +24,27 @@
             <?php endif; ?>
         <?php endif; ?>
 
-        <nav>
-            <ul class="nav">
-
-                <li class="nav-item">
-                    <a class="nav-link active" href="?food=1">Order food</a>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-info d-flex justify-content-center">
+            <ul class="navbar-nav">
+                <li class="nav-item active px-2">
+                    <a class="nav-link" href="?food=1">Food</a>
                 </li>
-
-
-                <li class="nav-item">
-                    <a class="nav-link" href="?food=0">Order drinks</a>
+                <li class="nav-item px-2">
+                    <a class="nav-link" href="?food=0">Drinks</a>
                 </li>
-
             </ul>
         </nav>
         <form method="post">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="fname">First name:</label>
+                    <input type="text" id="fname" name="fname" value="<?= $_SESSION['fname'] ?? ''; ?>" class="form-control" />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="lname">Last name:</label>
+                    <input type="text" id="lname" name="lname" value="<?= $_SESSION['lname'] ?? ''; ?>" class="form-control" />
+                </div>
+            </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="email">E-mail:</label>
@@ -122,11 +128,11 @@
                 </div>
             </div>
 
-            <button type="submit" name="order" class="btn btn-primary">Order!</button>
+            <button type="submit" name="order" class="btn btn-light">Order!</button>
 
         </form>
 
-        <footer>You already ordered <strong>&euro; <?php echo $_COOKIE['order'] ?? '0' ?></strong> in food and drinks.</footer>
+        <footer class="mb-2">You already ordered <strong>&euro; <?php echo $_COOKIE['order'] ?? '0' ?></strong> in food and drinks.</footer>
     </div>
 
     <style>
