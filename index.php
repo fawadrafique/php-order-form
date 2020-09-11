@@ -5,15 +5,37 @@ declare(strict_types=1);
 //we are going to use session variables so we need to enable sessions
 session_start();
 $totalValue = 0;
-$email = $street = $streetnumber = $city = $zipcode = $success = '';
-$empty = ['email' => '', 'street' => '', 'streetnumber' => '', 'city' => '', 'zipcode' => '', 'product' => '', 'delivery' => ''];
-$errors = ['email' => '', 'street' => '', 'streetnumber' => '', 'city' => '', 'zipcode' => ''];
+$fname = $lname = $email = $street = $streetnumber = $city = $zipcode = $success = '';
+$errors = ['fname' => '', 'lname' => '', 'email' => '', 'street' => '', 'streetnumber' => '', 'city' => '', 'zipcode' => '', 'product' => '', 'delivery' => ''];
 define("owner_email", "becodephp@gmail.com");
 
 if (isset($_POST['order'])) {
 
+    if (empty($_POST['fname'])) {
+        $errors['fname'] = "Please enter your first name";
+    } else {
+        $fname = sanitizer($_POST['fname']);
+        $_SESSION['fname'] = $fname;
+        if (preg_match('/^[a-z ]*$/i', $fname)) {
+            // TODO: email is valid
+        } else {
+            $errors['fname'] = "Alphabet only";
+        }
+    }
+    if (empty($_POST['lname'])) {
+        $errors['lname'] = "Please enter your last name";
+    } else {
+        $lname = sanitizer($_POST['lname']);
+        $_SESSION['lname'] = $lname;
+        if (preg_match('/^[a-z ]*$/i', $lname)) {
+            // TODO: email is valid
+        } else {
+            $errors['lname'] = "Alphabet only";
+        }
+    }
+
     if (empty($_POST['email'])) {
-        $empty['email'] = "Please enter your email address";
+        $errors['email'] = "Please enter your email address";
     } else {
         $email = sanitizer($_POST['email']);
         $_SESSION['email'] = $email;
@@ -25,14 +47,14 @@ if (isset($_POST['order'])) {
         }
     }
     if (empty($_POST['street'])) {
-        $empty['street'] =  "Street name is required";
+        $errors['street'] =  "Street name is required";
     } else {
         $street = sanitizer($_POST['street']);
         $_SESSION['street'] = $street;
         // TODO: street is valid
     }
     if (empty($_POST['streetnumber'])) {
-        $empty['streetnumber'] =  "Street number is required";
+        $errors['streetnumber'] =  "Street number is required";
     } else {
         $streetnumber = sanitizer($_POST['streetnumber']);
         $_SESSION['streetnumber'] = $streetnumber;
@@ -43,14 +65,14 @@ if (isset($_POST['order'])) {
         }
     }
     if (empty($_POST['city'])) {
-        $empty['city'] =  "City is required";
+        $errors['city'] =  "City is required";
     } else {
         $city = sanitizer($_POST['city']);
         $_SESSION['city'] = $city;
         // TODO: city is valid
     }
     if (empty($_POST['zipcode'])) {
-        $empty['zipcode'] =  "Zipcode is required";
+        $errors['zipcode'] =  "Zipcode is required";
     } else {
         $zipcode = sanitizer($_POST['zipcode']);
         $_SESSION['zipcode'] = $zipcode;
@@ -61,7 +83,7 @@ if (isset($_POST['order'])) {
         }
     }
     if (empty($_POST['products'])) {
-        $empty['product'] =  "At least one product is required";
+        $errors['product'] =  "At least one product is required";
     } else {
         $cart = $_POST['products'];
         foreach ($cart as $value) {
@@ -71,18 +93,18 @@ if (isset($_POST['order'])) {
         print_r($cart);
     }
     if (empty($_POST['delivery'])) {
-        $empty['delivery'] =  "Please select a delivery option";
+        $errors['delivery'] =  "Please select a delivery option";
     } else {
         $delivery = $_POST['delivery'];
     }
 
-    // if (array_filter($errors) || array_filter($empty)) {
+    // if (array_filter($errors) || array_filter($errors)) {
     //     // TODO: echo 'Please fix the errors' . "<br />";
     // } else {
     //     success($delivery);
     // }
 }
-whatIsHappening();
+//whatIsHappening();
 function whatIsHappening()
 {
     echo '<h2>$_GET</h2>';
