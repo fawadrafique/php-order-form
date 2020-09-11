@@ -13,7 +13,7 @@
     <div class="container text-light">
         <h1 class="text-center">Des Pardes</h1>
         <?php if (isset($_POST['order'])) : ?>
-            <?php if (!array_filter($errors) && !array_filter($empty)) : ?>
+            <?php if (!array_filter($errors)) : ?>
                 <?php session_unset(); ?>
                 <?php $_COOKIE['order'] += $totalValue; ?>
                 <?php setcookie('order', $_COOKIE['order'], time() + (86400 * 30), '/'); ?>
@@ -39,20 +39,24 @@
                 <div class="form-group col-md-6">
                     <label for="fname">First name:</label>
                     <input type="text" id="fname" name="fname" value="<?= $_SESSION['fname'] ?? ''; ?>" class="form-control" />
+                    <?php if ($errors['fname']) : ?>
+                        <div class="text-warning"><?= $errors['fname']; ?></div>
+                    <?php endif; ?>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="lname">Last name:</label>
                     <input type="text" id="lname" name="lname" value="<?= $_SESSION['lname'] ?? ''; ?>" class="form-control" />
+                    <?php if ($errors['lname']) : ?>
+                        <div class="text-warning"><?= $errors['lname']; ?></div>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="email">E-mail:</label>
                     <input type="text" id="email" name="email" value="<?= $_SESSION['email'] ?? ''; ?>" class="form-control" />
-                    <?php if ($empty['email']) : ?>
-                        <div class="text-danger"><?= $empty['email']; ?></div>
-                    <?php elseif ($errors['email']) : ?>
-                        <div class="text-danger"><?= $errors['email']; ?></div>
+                    <?php if ($errors['email']) : ?>
+                        <div class="text-warning"><?= $errors['email']; ?></div>
                     <?php endif; ?>
                 </div>
 
@@ -66,17 +70,15 @@
                     <div class="form-group col-md-6">
                         <label for="street">Street:</label>
                         <input type="text" name="street" id="street" value="<?= $_SESSION['street'] ?? ''; ?>" class="form-control">
-                        <?php if ($empty['street']) : ?>
-                            <div class="text-danger"><?= $empty['street']; ?></div>
+                        <?php if ($errors['street']) : ?>
+                            <div class="text-warning"><?= $errors['street']; ?></div>
                         <?php endif; ?>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="streetnumber">Street number:</label>
                         <input type="text" id="streetnumber" name="streetnumber" value="<?= $_SESSION['streetnumber'] ?? ''; ?>" class="form-control">
-                        <?php if ($empty['streetnumber']) : ?>
-                            <div class="text-danger"><?= $empty['streetnumber']; ?></div>
-                        <?php elseif ($errors['streetnumber']) : ?>
-                            <div class="text-danger"><?= $errors['streetnumber']; ?></div>
+                        <?php if ($errors['streetnumber']) : ?>
+                            <div class="text-warning"><?= $errors['streetnumber']; ?></div>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -84,17 +86,15 @@
                     <div class="form-group col-md-6">
                         <label for="city">City:</label>
                         <input type="text" id="city" name="city" value="<?= $_SESSION['city'] ?? ''; ?>" class="form-control">
-                        <?php if ($empty['city']) : ?>
-                            <div class="text-danger"><?= $empty['city']; ?></div>
+                        <?php if ($errors['city']) : ?>
+                            <div class="text-warning"><?= $errors['city']; ?></div>
                         <?php endif; ?>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="zipcode">Zipcode</label>
                         <input type="text" id="zipcode" name="zipcode" value="<?= $_SESSION['zipcode'] ?? ''; ?>" class="form-control">
-                        <?php if ($empty['zipcode']) : ?>
-                            <div class="text-danger"><?= $empty['zipcode']; ?></div>
-                        <?php elseif ($errors['zipcode']) : ?>
-                            <div class="text-danger"><?= $errors['zipcode']; ?></div>
+                        <?php if ($errors['zipcode']) : ?>
+                            <div class="text-warning"><?= $errors['zipcode']; ?></div>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -109,8 +109,8 @@
                                 <input type="checkbox" value="<?php echo $product['price'] ?>" name="products[<?php echo $i ?>]" /> <?php echo $product['name'] ?> -
                                 &euro; <?php echo number_format($product['price'], 2) ?></label><br />
                         <?php endforeach; ?>
-                        <?php if ($empty['product']) : ?>
-                            <div class="text-danger"><?= $empty['product']; ?></div>
+                        <?php if ($errors['product']) : ?>
+                            <div class="text-warning"><?= $errors['product']; ?></div>
                         <?php endif; ?>
                     </fieldset>
                 </div>
@@ -121,8 +121,8 @@
                             <label>
                                 <input type="radio" value="<?php echo $delivery['time'] ?>" name="delivery" /> <?php echo $delivery['name'] ?> </label><br />
                         <?php endforeach; ?>
-                        <?php if ($empty['delivery']) : ?>
-                            <div class="text-danger"><?= $empty['delivery']; ?></div>
+                        <?php if ($errors['delivery']) : ?>
+                            <div class="text-warning"><?= $errors['delivery']; ?></div>
                         <?php endif; ?>
                     </fieldset>
                 </div>
