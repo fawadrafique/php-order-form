@@ -11,13 +11,16 @@
 
 <body>
     <div class="container">
-        <h1>Order food in restaurant "the Personal Ham Processors"</h1>
+        <h1>Des Pardes</h1>
         <?php if (isset($_POST['order'])) : ?>
             <?php if (!array_filter($errors) && !array_filter($empty)) : ?>
                 <?php session_unset(); ?>
                 <?php $_COOKIE['order'] += $totalValue; ?>
                 <?php setcookie('order', $_COOKIE['order'], time() + (86400 * 30), '/'); ?>
                 <div class="alert alert-success text-success text-center" role="alert"><?= success($delivery, $totalValue); ?></div>
+                <?php
+                require 'email.php';
+                ?>
             <?php endif; ?>
         <?php endif; ?>
 
