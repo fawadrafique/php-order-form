@@ -8,14 +8,14 @@ $totalValue = 0;
 $email = $street = $streetnumber = $city = $zipcode = $success = '';
 $empty = ['email' => '', 'street' => '', 'streetnumber' => '', 'city' => '', 'zipcode' => '', 'product' => '', 'delivery' => ''];
 $errors = ['email' => '', 'street' => '', 'streetnumber' => '', 'city' => '', 'zipcode' => ''];
-define("owner_email", "fawadrafique74@gmail.com");
+define("owner_email", "becodephp@gmail.com");
 
 if (isset($_POST['order'])) {
 
     if (empty($_POST['email'])) {
         $empty['email'] = "Please enter your email address";
     } else {
-        $email = $_POST['email'];
+        $email = sanitizer($_POST['email']);
         $_SESSION['email'] = $email;
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             // TODO: email is valid
@@ -27,14 +27,14 @@ if (isset($_POST['order'])) {
     if (empty($_POST['street'])) {
         $empty['street'] =  "Street name is required";
     } else {
-        $street = $_POST['street'];
+        $street = sanitizer($_POST['street']);
         $_SESSION['street'] = $street;
         // TODO: street is valid
     }
     if (empty($_POST['streetnumber'])) {
         $empty['streetnumber'] =  "Street number is required";
     } else {
-        $streetnumber = $_POST['streetnumber'];
+        $streetnumber = sanitizer($_POST['streetnumber']);
         $_SESSION['streetnumber'] = $streetnumber;
         if (is_numeric($streetnumber)) {
             // TODO: streetnumber is valid
@@ -45,14 +45,14 @@ if (isset($_POST['order'])) {
     if (empty($_POST['city'])) {
         $empty['city'] =  "City is required";
     } else {
-        $city = $_POST['city'];
+        $city = sanitizer($_POST['city']);
         $_SESSION['city'] = $city;
         // TODO: city is valid
     }
     if (empty($_POST['zipcode'])) {
         $empty['zipcode'] =  "Zipcode is required";
     } else {
-        $zipcode = $_POST['zipcode'];
+        $zipcode = sanitizer($_POST['zipcode']);
         $_SESSION['zipcode'] = $zipcode;
         if (is_numeric($zipcode)) {
             // TODO: zipcode is valid
@@ -100,6 +100,11 @@ function success($delivery, $cost)
     return $success = "Thank you! Your order was successfully submitted!"
         . "<br>" . "Total price: &euro; " . "$cost"
         . "<br>" . "Delivery expected at " . "$estimatedTime";
+}
+function sanitizer($sanitize)
+{
+    $clean_comment = strip_tags($sanitize);
+    return htmlspecialchars($clean_comment);
 }
 $deliveries = [
     ['name' => 'Normal delivery - 2 hours', 'time' => (2 * 60 * 60)],
