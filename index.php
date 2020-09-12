@@ -96,9 +96,10 @@ if (isset($_POST['order'])) {
         $errors['delivery'] =  "Please select a delivery option";
     } else {
         $delivery = $_POST['delivery'];
+        $delivery_time = ($delivery == 2700) ? '45 minutes' : '2 hours';
     }
 }
-//whatIsHappening();
+whatIsHappening();
 function whatIsHappening()
 {
     echo '<h2>$_GET</h2>';
@@ -127,3 +128,5 @@ function sanitizer($sanitize)
 require 'food.php';
 
 require 'form-view.php';
+
+//require 'test.php';
