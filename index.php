@@ -86,20 +86,20 @@ if (isset($_POST['order'])) {
         $errors['product'] =  "At least one product is required";
     } else {
         $cart = $_POST['products'];
-        foreach ($cart as $value) {
+        foreach ($cart as $key => $value) {
             $totalValue += $value;
         }
-
-        print_r($cart);
     }
     if (empty($_POST['delivery'])) {
         $errors['delivery'] =  "Please select a delivery option";
     } else {
-        $delivery = $_POST['delivery'];
+        foreach ($_POST['delivery'] as $value) {
+            $delivery = $value;
+        }
         $delivery_time = ($delivery == 2700) ? '45 minutes' : '2 hours';
     }
 }
-whatIsHappening();
+//whatIsHappening();
 function whatIsHappening()
 {
     echo '<h2>$_GET</h2>';
@@ -114,7 +114,7 @@ function whatIsHappening()
 function success($delivery, $cost)
 {
     $estimatedTime = date('h:i A', time() + $delivery);
-    return $success = "Thank you! Your order was successfully submitted!"
+    return "Thank you! Your order was successfully submitted!"
         . "<br>" . "Total price: &euro; " . "$cost"
         . "<br>" . "Delivery expected at " . "$estimatedTime";
 }
@@ -126,7 +126,5 @@ function sanitizer($sanitize)
 
 
 require 'food.php';
-
 require 'form-view.php';
-
 //require 'test.php';

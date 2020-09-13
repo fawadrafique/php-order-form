@@ -106,7 +106,7 @@
                         <legend>Products</legend>
                         <?php foreach ($products as $i => $product) : ?>
                             <label>
-                                <input type="checkbox" value="<?php echo $product['price'] ?>" name="products[<?php echo $i ?>]" /> <?php echo $product['name'] ?> -
+                                <input type="checkbox" value="<?php echo $product['price'] ?>" name="products[<?php echo $product['name'] ?>]" /> <?php echo $product['name'] ?> -
                                 &euro; <?php echo number_format($product['price'], 2) ?></label><br />
                         <?php endforeach; ?>
                         <?php if ($errors['product']) : ?>
@@ -120,7 +120,7 @@
                         <div class="text-dark mb-1" style="font-size: 12px;"><?= 'Normal orders are fulfilled in 2 hours, for express delivery it is only 45 minutes.' ?></div>
                         <?php foreach ($deliveries as $i => $delivery) : ?>
                             <label>
-                                <input type="radio" value="<?php echo $delivery['time'] ?>" name="delivery" /> <?php echo $delivery['name'] ?> </label><br />
+                                <input type="radio" value="<?php echo $delivery['time'] ?>" name="delivery[<?php echo $delivery['price'] ?>]" /> <?php echo $delivery['name'] ?> </label><br />
                         <?php endforeach; ?>
                         <?php if ($errors['delivery']) : ?>
                             <div class="text-warning"><?= $errors['delivery']; ?></div>

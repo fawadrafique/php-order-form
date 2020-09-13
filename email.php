@@ -1,8 +1,8 @@
 <?php
+require 'message.php';
+
 $to = $email;
-$subject = 'Your order\'s in the kitchen 🎉';
-$message = ob_get_contents();
-ob_end_flush();
+$subject = 'Your order\'s in the kitchen';
 $from = dp_email;
 // To send HTML mail, the Content-type header must be set
 $headers  = 'MIME-Version: 1.0' . "\r\n";
