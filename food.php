@@ -1,7 +1,7 @@
 <?php
 $deliveries = [
-    ['name' => 'Normal delivery - &euro; 3', 'time' => (2 * 60 * 60)],
-    ['name' => 'Express delivery - &euro; 5', 'time' => (45 * 60)]
+    ['name' => 'Normal delivery - &euro; 3', 'price' => 3, 'time' => (2 * 60 * 60)],
+    ['name' => 'Express delivery - &euro; 5', 'price' => 5, 'time' => (45 * 60)]
 ];
 //products with their price.
 if (!$_GET || $_GET['food']) {
