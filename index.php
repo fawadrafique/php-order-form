@@ -7,6 +7,7 @@ session_start();
 $totalValue = 0;
 $fname = $lname = $email = $street = $streetnumber = $city = $zipcode = $success = '';
 $errors = ['fname' => '', 'lname' => '', 'email' => '', 'street' => '', 'streetnumber' => '', 'city' => '', 'zipcode' => '', 'product' => '', 'delivery' => ''];
+$foods = ['Chicken Tandoori', 'Chicken Makhni', 'Palak Paneer', 'Sindhi Biryani', 'Haleem', 'Cola', 'Fanta', 'Sprite', 'Ice-tea', 'Lassi'];
 define("dp_email", "becodephp@gmail.com");
 
 if (isset($_POST['order'])) {
@@ -82,24 +83,27 @@ if (isset($_POST['order'])) {
             $errors['email'] =  "\"$zipcode\" is not a valid Zipcode";
         }
     }
+
     if (empty($_POST['products'])) {
         $errors['product'] =  "At least one product is required";
     } else {
         $cart = $_POST['products'];
+        foreach ($foods as $food) {
+            $_SESSION[$food] = false;
+        }
         foreach ($cart as $key => $value) {
             $totalValue += $value;
+            $_SESSION[$key] = true;
         }
-    }
-    if (empty($_POST['delivery'])) {
-        $errors['delivery'] =  "Please select a delivery option";
-    } else {
-        foreach ($_POST['delivery'] as $value) {
-            $delivery = $value;
-        }
-        $delivery_time = ($delivery == 2700) ? '45 minutes' : '2 hours';
     }
 }
-//whatIsHappening();
+if (empty($_POST['delivery'])) {
+    $errors['delivery'] =  "Please select a delivery option";
+} else {
+    $delivery_time = ($_POST['delivery'] == 2700) ? '45 minutes' : '2 hours';
+}
+
+whatIsHappening();
 function whatIsHappening()
 {
     echo '<h2>$_GET</h2>';
@@ -127,4 +131,3 @@ function sanitizer($sanitize)
 
 require 'food.php';
 require 'form-view.php';
-//require 'test.php';
