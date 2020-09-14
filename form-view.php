@@ -106,7 +106,7 @@
                         <legend>Products</legend>
                         <?php foreach ($products as $i => $product) : ?>
                             <label>
-                                <input type="checkbox" value="<?php echo $product['price'] ?>" name="products[<?php echo $product['name'] ?>]" <?php echo $_SESSION[$product['name']] == true ? 'checked' : ''; ?> /> <?php echo $product['name'] ?> -
+                                <input type="checkbox" value="<?php echo $product['price'] ?>" name="products[<?php echo $product['name'] ?>]" <?php echo !empty($_SESSION[$product['name']]) == true ? 'checked' : ''; ?> /> <?php echo $product['name'] ?> -
                                 &euro; <?php echo number_format($product['price'], 2) ?></label><br />
                         <?php endforeach; ?>
                         <?php if ($errors['product']) : ?>
